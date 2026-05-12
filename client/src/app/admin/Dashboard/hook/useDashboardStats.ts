@@ -1,0 +1,86 @@
+import { useMemo } from "react";
+import { useAllExchangeRate } from "../../../../hooks/useExchangeRate";
+import { useTransaction } from "../../../../hooks/admin/useTransaction";
+import { useUser } from "../../../../hooks/admin/useUser";
+import { useCurrency } from "../../../../hooks/useCurrency";
+
+export type StatusKey = "pending" | "received" | "processing" | "completed" | "cancelled";
+
+export function useDashboardStats() {
+  const { userTotal, isLoading: usrLoading, error: usrError } = useUser();
+  const { transaction = [], transactionTotal, isLoading: txLoading, error: txError } = useTransaction();
+  const { exchangeRates = [], isLoading: exLoading } = useAllExchangeRate();
+  const { currency = [], currencyTotal, isLoading: cyLoading, error: cyError } = useCurrency()
+
+  const isLoading = usrLoading || txLoading || exLoading || cyLoading;
+  const error = usrError || txError || cyError;
+
+  const defaultStatusBreakdown: Record<StatusKey, number> = {
+    pending: 0,
+    received: 0,
+    processing: 0,
+    completed: 0,
+    cancelled: 0,
+  };
+
+  return useMemo(() => {
+    if (isLoading) {
+      return {
+        isLoading: true,
+        totalUsers: 0,
+        totalTransactions: 0,
+        totalCurrency: 0,
+        totalVolume: 0,
+        statusBreakdown: defaultStatusBreakdown,
+        recentTransactions: [],
+        topPairs: [],
+        exchangeRates: [],
+        currency: []
+      };
+    }
+
+    const totalVolume = Number(
+      transaction.reduce((acc, t) => acc + (t?.baseAmount || 0), 0).toFixed(2)
+    );
+
+    const statusBreakdown = transaction.reduce<Record<StatusKey, number>>(
+      (acc, t) => {
+        const s = t.status as StatusKey;
+        acc[s] = (acc[s] || 0) + 1;
+        return acc;
+      },
+      { ...defaultStatusBreakdown }
+    );
+
+    const recentTransactions = [...transaction]
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, 8);
+
+    const pairVolume: Record<string, number> = {};
+    for (const t of transaction) {
+      const key = `${(t.fromCurrency as any)?.code ?? "?"} → ${(t.toCurrency as any)?.code ?? "?"}`;
+      pairVolume[key] = (pairVolume[key] || 0) + (t.baseAmount || 0);
+    }
+    const topPairs = Object.entries(pairVolume)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([pair, volume]) => ({ pair, volume: Number(volume.toFixed(2)) }));
+
+    const pendingCount = statusBreakdown.pending + statusBreakdown.received;
+
+    return {
+      isLoading: false,
+      totalUsers: userTotal,
+      totalTransactions: transactionTotal,
+      totalCurrency: currencyTotal,
+      totalVolume,
+      statusBreakdown,
+      recentTransactions,
+      topPairs,
+      exchangeRates,
+      currency,
+      pendingCount,
+      error,
+    };
+  }, [transaction, currency, currencyTotal, userTotal, transactionTotal, exchangeRates, isLoading, error]);
+}
