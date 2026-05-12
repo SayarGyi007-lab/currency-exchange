@@ -95,7 +95,6 @@ npm run dev
 
 - Email & Password Authentication
 - JWT Authorization
-- Google OAuth Login
 
 ---
 
