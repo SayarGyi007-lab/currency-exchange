@@ -108,7 +108,7 @@ npm run dev
 
 ## Live Demo
 
-Frontend: Coming soon...  
+Frontend: https://currency-exchange-jbyl.vercel.app/  
 Backend API: https://currency-exchange-f4uv.onrender.com
 
 # Author
