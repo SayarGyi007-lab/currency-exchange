@@ -113,7 +113,7 @@ const ContactUs = () => {
 
           <div className="space-y-5">
 
-            {/* EMAIL */}
+            {/* email */}
             <a
               href="mailto:support@swiftexchange.com"
               className="flex items-center justify-between p-5 rounded-xl bg-black/60 border border-[#38476d]/30 hover:border-[#8affec] transition group"
@@ -133,7 +133,7 @@ const ContactUs = () => {
               </span>
             </a>
 
-            {/* PHONE */}
+            {/* phone */}
             <a
               href="tel:+1234567890"
               className="flex items-center justify-between p-5 rounded-xl bg-black/60 border border-[#38476d]/30 hover:border-[#8affec] transition group"
@@ -153,9 +153,9 @@ const ContactUs = () => {
               </span>
             </a>
 
-            {/* FACEBOOK */}
+            {/* fb */}
             <a
-              href="https://facebook.com/yourpage"
+              href="https://facebook.com/something"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between p-5 rounded-xl bg-black/60 border border-[#38476d]/30 hover:border-[#8affec] transition group"
@@ -166,7 +166,7 @@ const ContactUs = () => {
                 </span>
                 <div>
                   <p className="text-white font-semibold">Facebook</p>
-                  <p className="text-xs text-[#9baad6]">facebook.com/yourpage</p>
+                  <p className="text-xs text-[#9baad6]">facebook.com/something</p>
                 </div>
               </div>
 
@@ -175,7 +175,7 @@ const ContactUs = () => {
               </span>
             </a>
 
-            {/* SMS */}
+            {/* sms */}
             <a
               href="sms:+1234567890"
               className="flex items-center justify-between p-5 rounded-xl bg-black/60 border border-[#38476d]/30 hover:border-[#8affec] transition group"

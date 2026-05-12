@@ -165,7 +165,7 @@ const Status = () => {
                         style={{ background: "linear-gradient(135deg, #142449, #38476d)" }}
                       >
                         {tx?.receiverName
-                          ? tx.receiverName.split(" ").map((n) => n[0]).slice(0, 2).join("")
+                          ? tx.receiverName.split(" ").map((n:string) => n[0]).slice(0, 2).join("")
                           : "ER"}
                       </div>
                       <div className="flex flex-col">

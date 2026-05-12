@@ -39,7 +39,7 @@ const Dashboard = () => {
     totalTransactions,
     totalCurrency,
     totalVolume,
-    pendingCount,
+    pendingCount = 0,
     statusBreakdown,
     recentTransactions,
     topPairs,
@@ -129,7 +129,7 @@ const Dashboard = () => {
                 header: "Status",
                 render: (t) => (
                   <span
-                    className={`inline-block px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${STATUS_STYLES[t.status]
+                    className={`inline-block px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${STATUS_STYLES[t.status as keyof typeof STATUS_STYLES]
                       }`}
                   >
                     {t.status}
@@ -140,7 +140,7 @@ const Dashboard = () => {
                 header: "User IP",
                 render: (t) => (
                   <span className="text-xs text-[var(--text-secondary)]">
-                    {t.userIp || "-"}
+                    {t.userIP || "-"}
                   </span>
                 ),
               },

@@ -121,7 +121,7 @@ const TransactionById = () => {
                     </div>
 
                     <div
-                        className={`px-5 py-3 rounded-2xl text-xs font-black uppercase tracking-[0.2em] border backdrop-blur-xl ${STATUS_STYLES[transaction.status]}`}
+                        className={`px-5 py-3 rounded-2xl text-xs font-black uppercase tracking-[0.2em] border backdrop-blur-xl ${STATUS_STYLES[transaction.status as keyof typeof STATUS_STYLES]}`}
                     >
                         {transaction.status}
                     </div>

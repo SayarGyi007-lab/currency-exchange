@@ -36,7 +36,6 @@ const ExchangeRateCard = ({
     sellTrend,
     sellPercent,
     onViewChart,
-    isActive
 }: ExchangeRateCardProps) => {
     return (
         <div className="bg-[#101e3e] p-6 rounded-xl border border-[#38476d]/20 hover:border-[#5b7cff]/40 transition-all">

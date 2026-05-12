@@ -147,7 +147,7 @@ const Transaction = () => {
             reset();
             navigate(`/status/${id}`);
 
-        } catch (err) {
+        } catch (err: any) {
             const backendErrors = err?.data?.errors;
 
             if (backendErrors) {
