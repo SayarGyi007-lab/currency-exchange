@@ -1,13 +1,13 @@
 import { useMemo } from "react";
-import { useAllExchangeRate } from "../../../../hooks/useExchangeRate";
-import { useTransaction } from "../../../../hooks/admin/useTransaction";
-import { useUser } from "../../../../hooks/admin/useUser";
-import { useCurrency } from "../../../../hooks/useCurrency";
+import { useAllExchangeRate } from "../../ExchangeRate/hooks/useExchangeRate";
+import { useTransaction } from "../../Transaction/hook/useTransaction";
+import { useUser } from "../../User/hook/useUser";
+import { useCurrency } from "../../Currency/hook/useCurrency";
 
 export type StatusKey = "pending" | "received" | "processing" | "completed" | "cancelled";
 
 export function useDashboardStats() {
-  const { userTotal, isLoading: usrLoading, error: usrError } = useUser();
+  const { usersTotal, isLoading: usrLoading, error: usrError } = useUser();
   const { transaction = [], transactionTotal, isLoading: txLoading, error: txError } = useTransaction();
   const { exchangeRates = [], isLoading: exLoading } = useAllExchangeRate();
   const { currency = [], currencyTotal, isLoading: cyLoading, error: cyError } = useCurrency()
@@ -70,7 +70,7 @@ export function useDashboardStats() {
 
     return {
       isLoading: false,
-      totalUsers: userTotal,
+      totalUsers: usersTotal,
       totalTransactions: transactionTotal,
       totalCurrency: currencyTotal,
       totalVolume,
@@ -82,5 +82,5 @@ export function useDashboardStats() {
       pendingCount,
       error,
     };
-  }, [transaction, currency, currencyTotal, userTotal, transactionTotal, exchangeRates, isLoading, error]);
+  }, [transaction, currency, currencyTotal, usersTotal, transactionTotal, exchangeRates, isLoading, error]);
 }

@@ -5,6 +5,7 @@ import {
   useRestoreCurrencyMutation,
   useUpdateCurrencyMutation,
 } from "../../../../slices/redux-slices/currency-api";
+import type { ICreateAndUpdateCurrency } from "../../../../slices/interfaces/currency";
 
 export const useCurrencyActions = () => {
   const [archive] = useArchiveCurrencyMutation();
@@ -39,7 +40,7 @@ export const useCurrencyActions = () => {
     }
   };
 
-  const updateCurrency = async (id: string, data: any) => {
+  const updateCurrency = async (id: string, data: ICreateAndUpdateCurrency) => {
     try {
       await update({ id, ...data }).unwrap();
       toast.success("Currency updated");

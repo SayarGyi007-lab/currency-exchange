@@ -35,6 +35,30 @@ function AdminHeader() {
       ? "text-indigo-600 font-semibold underline"
       : "hover:underline text-lg transition";
 
+  const sharedDesktopLinks = (
+    <>
+      <NavLink to="/admin/transactions" className={navLinkClass}>
+        Transactions
+      </NavLink>
+
+      <NavLink to="/admin/currencies" className={navLinkClass}>
+        Currencies
+      </NavLink>
+    </>
+  );
+
+  const sharedMobileLinks = (
+    <>
+      <NavLink to="/admin/transactions" className={navLinkClass} onClick={() => setMenuOpen(false)}>
+        Transactions
+      </NavLink>
+
+      <NavLink to="/admin/currencies" className={navLinkClass} onClick={() => setMenuOpen(false)}>
+        Currencies
+      </NavLink>
+    </>
+  );
+
   return (
     <header className="bg-black shadow-md static text-gray-500">
       <nav className="flex justify-between items-center px-6 py-4">
@@ -47,16 +71,22 @@ function AdminHeader() {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex gap-6 items-center">
-          
-          {/* ADMIN VIEW */}
+
+          {/* Admin */}
           {userInfo?.role === "admin" && (
             <>
-              <NavLink to="/admin/transactions" className={navLinkClass}>
-                Transactions
+              <NavLink to="/admin/users" className={navLinkClass}>
+                Manage Admins
               </NavLink>
 
-              <NavLink to="/admin/currencies" className={navLinkClass}>
-                Currencies
+              {sharedDesktopLinks}
+
+              <NavLink to="/admin/rates" className={navLinkClass}>
+                Exchange Rates
+              </NavLink>
+
+              <NavLink to="/admin/payments" className={navLinkClass}>
+                Payments
               </NavLink>
 
               <Button
@@ -69,15 +99,21 @@ function AdminHeader() {
             </>
           )}
 
-          {/* SUPER ADMIN VIEW */}
+          {/* SuperAdmin */}
           {userInfo?.role === "super_admin" && (
             <>
-              <NavLink to="/admin/profile" className={navLinkClass}>
-                Super Admin Profile
+              <NavLink to="/admin/users" className={navLinkClass}>
+                Manage Admins
               </NavLink>
 
-              <NavLink to="/admin/manage-admins" className={navLinkClass}>
-                Manage Admins
+              {sharedDesktopLinks}
+
+              <NavLink to="/admin/rates" className={navLinkClass}>
+                Exchange Rates
+              </NavLink>
+
+              <NavLink to="/admin/payments" className={navLinkClass}>
+                Payments
               </NavLink>
 
               <Button
@@ -108,23 +144,25 @@ function AdminHeader() {
       {menuOpen && (
         <div className="md:hidden bg-black border-t border-gray-700 px-6 pb-4 flex flex-col gap-4 text-gray-50">
 
-          {/* ADMIN MOBILE */}
+          {/* Admin */}
           {userInfo?.role === "admin" && (
             <>
-              {/* <NavLink
-                to="/admin/profile"
+              <NavLink
+                to="/admin/users"
                 className="hover:underline text-base"
                 onClick={() => setMenuOpen(false)}
               >
-                Admin Profile
-              </NavLink> */}
-
-              <NavLink to="/admin/transactions" className={navLinkClass}>
-                Transactions
+                Manage Admins
               </NavLink>
 
-              <NavLink to="/admin/currencies" className={navLinkClass}>
-                Currencies
+              {sharedMobileLinks}
+
+              <NavLink to="/admin/rates" className={navLinkClass} onClick={() => setMenuOpen(false)}>
+                Exchange Rates
+              </NavLink>
+
+              <NavLink to="/admin/payments" className={navLinkClass} onClick={() => setMenuOpen(false)}>
+                Payments
               </NavLink>
 
               <Button
@@ -140,23 +178,26 @@ function AdminHeader() {
             </>
           )}
 
-          {/* SUPER ADMIN MOBILE */}
+          {/* SuperAdmin */}
           {userInfo?.role === "super_admin" && (
             <>
-              <NavLink
-                to="/admin/profile"
-                className="hover:underline text-base"
-                onClick={() => setMenuOpen(false)}
-              >
-                Super Admin Profile
-              </NavLink>
 
               <NavLink
-                to="/admin/manage-admins"
+                to="/admin/users"
                 className="hover:underline text-base"
                 onClick={() => setMenuOpen(false)}
               >
                 Manage Admins
+              </NavLink>
+
+              {sharedMobileLinks}
+
+              <NavLink to="/admin/rates" className={navLinkClass} onClick={() => setMenuOpen(false)}>
+                Exchange Rates
+              </NavLink>
+
+              <NavLink to="/admin/payments" className={navLinkClass} onClick={() => setMenuOpen(false)}>
+                Payments
               </NavLink>
 
               <Button

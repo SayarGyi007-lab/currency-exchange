@@ -1,88 +1,21 @@
 import * as z from "zod";
 
 export const createPaymentMethodSchema = z.object({
-  type: z.enum(["bank", "QR"], { message: "Type is required" }),
   currencyId: z.string().min(1, "Currency is required"),
-  accountName: z.string().optional(),
-  accountNumber: z.string().optional(),
-  bankProvider: z.string().optional(),
-  qrImage: z.string().optional(),
-}).superRefine((data, ctx) => {
-  if (data.type === "bank") {
-    if (!data.accountName) {
-      ctx.addIssue({
-        path: ["accountName"],
-        message: "Account name is required for bank type",
-        code: "custom"
-      });
-    }
-    if (!data.accountNumber) {
-      ctx.addIssue({
-        path: ["accountNumber"],
-        message: "Account number is required for bank type",
-        code: "custom"
-      });
-    }
-    if (!data.bankProvider) {
-      ctx.addIssue({
-        path: ["bankProvider"],
-        message: "Bank provider is required for bank type",
-        code: "custom"
-      });
-    }
-  }
 
-  if (data.type === "QR" && !data.qrImage) {
-    ctx.addIssue({
-      path: ["qrImage"],
-      message: "QR image is required for QR type",
-      code: "custom"
-    });
-  }
+  accountName: z.string().min(1, "Account name is required"),
+  accountNumber: z.string().min(1, "Account number is required"),
+  bankProvider: z.string().min(1, "Bank provider is required"),
+
+  qrImage: z.string().min(1, "QR image is required"),
 });
 
 export const updatePaymentMethodSchema = z.object({
-  type: z.enum(["bank", "QR"]).optional(),
-  currencyId: z.string().min(1).optional(),
+  currencyId: z.string().optional(),
 
   accountName: z.string().optional(),
   accountNumber: z.string().optional(),
   bankProvider: z.string().optional(),
+
   qrImage: z.string().optional(),
-}).superRefine((data, ctx) => {
-
-  if (data.type === "bank") {
-    if (!data.accountName) {
-      ctx.addIssue({
-        path: ["accountName"],
-        message: "Account name is required for bank type",
-        code: "custom",
-      });
-    }
-    if (!data.accountNumber) {
-      ctx.addIssue({
-        path: ["accountNumber"],
-        message: "Account number is required for bank type",
-        code: "custom",
-      });
-    }
-    if (!data.bankProvider) {
-      ctx.addIssue({
-        path: ["bankProvider"],
-        message: "Bank provider is required for bank type",
-        code: "custom",
-      });
-    }
-  }
-
-  if (data.type === "QR") {
-    if (!data.qrImage) {
-      ctx.addIssue({
-        path: ["qrImage"],
-        message: "QR image is required for QR type",
-        code: "custom",
-      });
-    }
-  }
-
 });

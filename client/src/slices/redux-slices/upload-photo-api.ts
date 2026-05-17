@@ -21,4 +21,4 @@ export const uploadPhotoSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const {useUploadMutation} = uploadPhotoSlice
+export const {useUploadMutation, useAdminUploadMutation} = uploadPhotoSlice

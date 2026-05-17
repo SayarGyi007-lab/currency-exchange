@@ -1,15 +1,16 @@
-import { createPaymentMethod, getPaymentByCurrency, getPaymentById, updatePaymentByCurrency } from "../controllers/payment-method.controller";
+import { createPaymentMethod, getPaymentByCurrency, getPaymentById, updatePaymentById, getAllPaymentMethods } from "../controllers/payment-method.controller";
 import { Router } from "express";
 import { protect } from "../middlewares/authentication";
-import { admin, superAdmin } from "../middlewares/authorization";
+import { superAdmin } from "../middlewares/authorization";
 import { validate } from "../middlewares/validation";
 import { createPaymentMethodSchema, updatePaymentMethodSchema } from "../validation/payment-method";
 
-const route = Router()
+const route = Router();
 
-route.post('/',protect,superAdmin,validate(createPaymentMethodSchema),createPaymentMethod)
-route.get('/:currencyId',getPaymentByCurrency)
-route.get('/:paymentId', getPaymentById)
-route.put('/:paymentId', protect, superAdmin, validate(updatePaymentMethodSchema), updatePaymentByCurrency)
+route.post("/", protect, superAdmin, validate(createPaymentMethodSchema), createPaymentMethod);
+route.get("/", getAllPaymentMethods);
+route.get("/id/:paymentId", getPaymentById);
+route.get("/currency/:currencyId", getPaymentByCurrency);
+route.put("/:paymentId", protect, superAdmin, validate(updatePaymentMethodSchema), updatePaymentById);
 
-export default route
+export default route;

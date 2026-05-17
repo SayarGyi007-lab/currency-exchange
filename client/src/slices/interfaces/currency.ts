@@ -7,7 +7,7 @@ export interface ICreateAndUpdateCurrency{
 }
 
 export interface Currency{
-    id: string; 
+    _id: string; 
     code: string; 
     name: string; 
     symbol: string;

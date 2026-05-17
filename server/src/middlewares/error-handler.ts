@@ -1,4 +1,4 @@
-import { AppError } from "utils/app-error";
+import { AppError } from "../utils/app-error";
 import { config } from "../config/config";
 import { NextFunction, Request, Response } from "express";
 

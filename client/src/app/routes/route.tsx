@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import { AdminLayout, AllCurrencies, AllTransaction, ChoosePaymentMethod, Dashboard, Login, Status, Transaction, TransactionById, UserHome, UserLayout } from "../../constant/lazy-load";
-import ExchangeRate from "../user/ExchangeRate";
-import ContactUs from "../user/ContactUs";
+import { AdminLayout, AllCurrencies, AllExchangeRate, AllPayments, AllTransaction, AllUsers, ChoosePaymentMethod, Dashboard, ExchangeRate, Login, Status, Transaction, TransactionById, UserHome, UserLayout } from "../../constant/lazy-load";
+import ContactUs from "../user/ContactUs/ContactUs";
 
 const router = createBrowserRouter([
     {
@@ -58,6 +57,18 @@ const router = createBrowserRouter([
         {
             path: 'currencies',
             element: <AllCurrencies/>
+        },
+        {
+            path: 'rates',
+            element: <AllExchangeRate/>
+        },
+        {
+            path: 'payments',
+            element: <AllPayments/>
+        },
+        {
+            path: 'users',
+            element: <AllUsers/>
         }
     ],
   },

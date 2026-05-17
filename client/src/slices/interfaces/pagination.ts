@@ -9,6 +9,7 @@ export interface QueryParams {
     paymentMethod?: string;
     fromCurrency?: string;
     toCurrency?: string
+    isActive?: boolean
 }
 
 export interface Pagination {

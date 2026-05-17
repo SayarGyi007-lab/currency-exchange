@@ -1,6 +1,5 @@
 import express from 'express'
 import cors from 'cors'
-// import cookieParser from 'cookie-parser'
 import { config } from './config/config'
 import { connectDb } from './db'
 import { connectRedis } from './config/redis'
@@ -14,6 +13,7 @@ import UserRoute from './routes/user.route'
 import RateHistoryRoute from './routes/rate-history.route'
 import RateHistorySnapshotRoute from './routes/exchange-rate-snapshot.route'
 import ConversionRoute from './routes/conversion.route'
+import errorHandler from './middlewares/error-handler'
 
 const app = express()
 
@@ -57,6 +57,8 @@ app.use(`${BaseURL}/transaction`,TransactionRoute)
 app.use(`${BaseURL}/rate-history`,RateHistoryRoute)
 app.use(`${BaseURL}/rate-chart`,RateHistorySnapshotRoute)
 app.use(`${BaseURL}/conversion`,ConversionRoute)
+
+app.use(errorHandler)
 
 const PORT =  config.PORT
 

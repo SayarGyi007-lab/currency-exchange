@@ -37,9 +37,6 @@ function UserHeader() {
               <NavLink to="/exchange" className={navLinkClass}>
                 Exchange Rate
               </NavLink>
-              {/* <NavLink to="/status/:id" className={mobileNavLinkClass}>
-                Status
-              </NavLink> */}
               <NavLink to="/contact" className={navLinkClass}>
                 Contact Us
               </NavLink>
@@ -67,9 +64,6 @@ function UserHeader() {
               <NavLink to="/exchange" className={mobileNavLinkClass}>
                 Exchange Rate
               </NavLink>
-              {/* <NavLink to="/status/:id" className={mobileNavLinkClass}>
-                Status
-              </NavLink> */}
               <NavLink to="/contact" className={mobileNavLinkClass}>
                 Contact Us
               </NavLink>

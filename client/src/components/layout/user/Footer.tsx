@@ -4,7 +4,7 @@ const Footer = () => {
        <footer className="relative z-10 border-t border-white/5" style={{ background: "rgba(6,14,32,0.6)", backdropFilter: "blur(8px)" }}>
           <div className="flex flex-col md:flex-row justify-between items-center px-8 py-8 gap-4 max-w-7xl mx-auto">
             <p className="text-[9px] uppercase tracking-[0.3em] font-bold text-[#9baad6]/40 text-center md:text-left">
-              © 2024 Kinetic Vault Asset Systems.{" "}
+              © 2026 Secure Systems.{" "}
               <br className="md:hidden" />
               Institutional Grade Security Protocols Enabled.
             </p>

@@ -88,7 +88,6 @@ const StatusBreakdown = ({
               Total Active
             </p>
 
-            {/* SAME DATA */}
             <p className="text-xl font-bold text-[var(--primary)]">
               {Object.values(statusBreakdown)
                 .reduce((acc, curr) => acc + curr, 0)
@@ -103,7 +102,6 @@ const StatusBreakdown = ({
               Completed
             </p>
 
-            {/* SAME DATA */}
             <p className="text-xl font-bold text-[var(--tertiary)]">
               {statusBreakdown.completed}
             </p>

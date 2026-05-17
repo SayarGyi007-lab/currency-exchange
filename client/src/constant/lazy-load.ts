@@ -6,7 +6,7 @@ export const UserLayout = PageLoader(
 )
 
 export const UserHome = PageLoader(
-    lazy(()=> import ('../app/user/Home'))
+    lazy(()=> import ('../app/user/Home/Home'))
 )
 
 export const AdminLayout = PageLoader(
@@ -15,15 +15,19 @@ export const AdminLayout = PageLoader(
 
 
 export const ChoosePaymentMethod = PageLoader(
-    lazy(()=> import('../app/user/PaymentMethod'))
+    lazy(()=> import('../app/user/PaymentMethod/PaymentMethod'))
 )
 
 export const Transaction = PageLoader(
-    lazy(()=> import('../app/user/Transaction'))
+    lazy(()=> import('../app/user/Transaction/Transaction'))
 )
 
 export const Status = PageLoader(
-    lazy(()=> import('../app/user/Status'))
+    lazy(()=> import('../app/user/Status/Status'))
+)
+
+export const ExchangeRate = PageLoader(
+    lazy(() => import('../app/user/ExchangeRate/ExchangeRate'))
 )
 
 //admin
@@ -46,4 +50,16 @@ export const TransactionById = PageLoader(
 
 export const AllCurrencies = PageLoader(
     lazy(() => import('../app/admin/Currency/AllCurrencies'))
+)
+
+export const AllExchangeRate = PageLoader(
+    lazy(() => import('../app/admin/ExchangeRate/ExchangeRate'))
+)
+
+export const AllPayments = PageLoader(
+    lazy(() => import('../app/admin/Payment/Payment'))
+)
+
+export const AllUsers = PageLoader(
+    lazy(() => import('../app/admin/User/User'))
 )

@@ -26,66 +26,81 @@ class RateHistoryService {
     }
 
     async getAllExchangeRate(query: QueryOptions) {
-        const { page, limit, skip, sortBy, order, fromCurrency, toCurrency } = query;
+    const { page, limit, skip, sortBy, order, fromCurrency, toCurrency } = query;
 
-        const filter: any = {};
+    const filter: any = {};
 
-        //find matching currencies
-        let fromIds: any[] = [];
-        let toIds: any[] = [];
+    let fromIds: any[] = [];
+    let toIds: any[] = [];
 
-        if (fromCurrency) {
-            const fromCurrencies = await Currency.find({
-                code: { $regex: fromCurrency, $options: "i" }
-            }).select("_id");
+    if (fromCurrency) {
+        const fromCurrencies = await Currency.find({
+            code: { $regex: fromCurrency, $options: "i" },
+            isActive: true,
+        }).select("_id");
 
-            fromIds = fromCurrencies.map(c => c._id);
-        }
-
-        if (toCurrency) {
-            const toCurrencies = await Currency.find({
-                code: { $regex: toCurrency, $options: "i" }
-            }).select("_id");
-
-            toIds = toCurrencies.map(c => c._id);
-        }
-
-        if (fromCurrency || toCurrency) {
-            const exchangeRates = await ExchangeRate.find({
-                ...(fromIds.length && { fromCurrency: { $in: fromIds } }),
-                ...(toIds.length && { toCurrency: { $in: toIds } }),
-            }).select("_id");
-
-            const exchangeRateIds = exchangeRates.map(e => e._id);
-
-            filter.exchangeRateId = { $in: exchangeRateIds };
-        }
-
-        // query rate history
-        const [data, total] = await Promise.all([
-            RateHistory.find(filter)
-                .populate({
-                    path: "exchangeRateId",
-                    populate: [
-                        { path: "fromCurrency", select: "code name symbol" },
-                        { path: "toCurrency", select: "code name symbol" },
-                    ],
-                })
-                .populate("changedBy", "name email")
-                .sort({ [sortBy]: order === "desc" ? 1 : -1 })
-                .skip(skip)
-                .limit(limit),
-
-            RateHistory.countDocuments(filter),
-        ]);
-
-        return {
-            data,
-            total,
-            page,
-            totalPages: limit > 0 ? Math.ceil(total / limit) : 1,
-        };
+        fromIds = fromCurrencies.map(c => c._id);
     }
+
+    if (toCurrency) {
+        const toCurrencies = await Currency.find({
+            code: { $regex: toCurrency, $options: "i" },
+            isActive: true,
+        }).select("_id");
+
+        toIds = toCurrencies.map(c => c._id);
+    }
+
+    if (fromCurrency || toCurrency) {
+        const exchangeRates = await ExchangeRate.find({
+            ...(fromIds.length && { fromCurrency: { $in: fromIds } }),
+            ...(toIds.length && { toCurrency: { $in: toIds } }),
+            isActive: true,
+        }).select("_id");
+
+        const exchangeRateIds = exchangeRates.map(e => e._id);
+
+        filter.exchangeRateId = { $in: exchangeRateIds };
+    }
+
+    const [data, total] = await Promise.all([
+        RateHistory.find(filter)
+            .populate({
+                path: "exchangeRateId",
+                populate: [
+                    {
+                        path: "fromCurrency",
+                        select: "code name symbol isActive",
+                        match: { isActive: true },
+                    },
+                    {
+                        path: "toCurrency",
+                        select: "code name symbol isActive",
+                        match: { isActive: true },
+                    },
+                ],
+            })
+            .populate("changedBy", "name email")
+            .sort({ [sortBy]: order === "desc" ? 1 : -1 })
+            .skip(skip)
+            .limit(limit),
+
+        RateHistory.countDocuments(filter),
+    ]);
+
+    const filteredData = data.filter((h: any) =>
+        h.exchangeRateId &&
+        h.exchangeRateId.fromCurrency &&
+        h.exchangeRateId.toCurrency
+    );
+
+    return {
+        data: filteredData,
+        total: filteredData.length,
+        page,
+        totalPages: limit > 0 ? Math.ceil(filteredData.length / limit) : 1,
+    };
+}
 }
 
 export default RateHistoryService

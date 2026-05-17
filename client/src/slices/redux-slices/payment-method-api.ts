@@ -1,11 +1,12 @@
-import type { ICreateAndUpdatePaymentMethod, PaymentMethodResponse } from "../interfaces/payment-method";
+import type { QueryParams } from "../interfaces/pagination";
+import type {  ICreatePaymentMethod, IUpdatePaymentMethod, PaymentMethodResponse } from "../interfaces/payment-method";
 import { apiSlice } from "./api";
 
 export const paymentMethodApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
 
     createPaymentMethod: builder.mutation({
-        query: (data: ICreateAndUpdatePaymentMethod) => ({
+        query: (data: ICreatePaymentMethod) => ({
             url: "payment",
             method: "POST",
             body: data,
@@ -15,7 +16,7 @@ export const paymentMethodApiSlice = apiSlice.injectEndpoints({
 
     getPaymentByCurrency: builder.query<PaymentMethodResponse, string>({
         query: (currencyId) => ({
-            url: `payment/${currencyId}`, 
+            url: `payment/currency/${currencyId}`, 
             method: "GET",
         }),
         providesTags: ["PaymentMethods"],
@@ -30,20 +31,31 @@ export const paymentMethodApiSlice = apiSlice.injectEndpoints({
     }),
 
     updatePaymentMethod: builder.mutation({
-        query: ({ id, ...data }: { id: string } & ICreateAndUpdatePaymentMethod) => ({
+        query: ({ id, ...data }: { id: string } & IUpdatePaymentMethod) => ({
             url: `payment/${id}`,
             method: "PUT",
             body: data,
         }),
         invalidatesTags: ["PaymentMethods"],
-        }),
+    }),
 
+    getAllPaymentMethod: builder.query<PaymentMethodResponse, QueryParams | void>({
+        query: (params) => ({
+            url: "payment",
+            method: "GET",
+            params: params ?? undefined
         }),
+        providesTags: ["PaymentMethods"]
+    })
+
+    }),
     });
+    
 
 export const {
   useCreatePaymentMethodMutation,
   useGetPaymentByCurrencyQuery,
   useGetPaymentByIdQuery,
   useUpdatePaymentMethodMutation,
+  useGetAllPaymentMethodQuery
 } = paymentMethodApiSlice;

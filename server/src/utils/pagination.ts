@@ -12,6 +12,7 @@ export interface QueryOptions {
     fromCurrency?: string;
     toCurrency?: string;
     currency?: string
+    isActive?: boolean
     // cursor?: string
 }
 
@@ -63,6 +64,10 @@ export const buildQuery = (req: Request): QueryOptions => {
 
     if(req.query.currency){
         query.currency = req.query.currency as string
+    }
+
+    if (req.query.isActive !== undefined) {
+        query.isActive = req.query.isActive === "true"
     }
 
     return query

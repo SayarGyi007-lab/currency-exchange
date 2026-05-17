@@ -3,18 +3,11 @@ import { QueryOptions } from "../utils/pagination";
 import { IUser } from "../interface/IUser";
 import { AppError } from "../utils/app-error";
 
-interface PaginatedResult<T> {
-  users: T[];
-  total?: number;
-  totalPages?: number;
-  page?: number;
-}
-
 class UserService {
   async getAllUsers(query: QueryOptions) {
-    const { page, limit, skip, search, sortBy, order } = query;
+    const { page, limit, skip, search, sortBy, order, isActive } = query;
 
-    const filter: any = {};
+    const filter: any = {isActive: isActive ?? true };
     if (search) {
       filter.$or = [
         { name: { $regex: search, $options: "i" } },
@@ -78,7 +71,7 @@ class UserService {
             throw new AppError("User not found", 404);
         }
 
-        if (user.isActive = true) {
+        if (user.isActive === true) {
             throw new AppError("User is not archived", 400);
         }
 

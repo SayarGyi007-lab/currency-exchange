@@ -3,7 +3,8 @@ import { AppError } from "../utils/app-error";
 import { QueryOptions } from "../utils/pagination";
 import { ICurrency, IUpdateCurrency } from "../interface/ICurrency";
 import { PaymentMethod } from "../models/payment-method";
-import { symbol } from "zod";
+import { ExchangeRate } from "../models/exchange-rate";
+import { Transaction } from "../models/transaction";
 
 class CurrencyService {
 
@@ -60,9 +61,9 @@ class CurrencyService {
 
   async getAllCurrencies(query: QueryOptions) {
 
-    const { page, limit, skip, search, sortBy, order } = query;
+    const { page, limit, skip, search, sortBy, order, isActive } = query;
 
-    const filter: any = {};
+    const filter: any = { isActive: isActive ?? true };
 
     if (search) {
       filter.$or = [
@@ -133,8 +134,8 @@ class CurrencyService {
       throw new AppError("Currency not found", 404);
     }
 
-    if (currency.isActive) {
-      throw new AppError("Currency is already active", 400);
+    if (currency.isActive === true) {
+      throw new AppError("User is not archived", 400);
     }
 
     await Currency.updateOne(
@@ -152,14 +153,48 @@ class CurrencyService {
 
   async deleteCurrency(currencyId: string) {
 
-    const currency = await Currency.findByIdAndDelete(currencyId);
+  const currency = await Currency.findById(currencyId);
 
-    if (!currency) {
-      throw new AppError("Currency not found", 404);
-    }
-
-    return true;
+  if (!currency) {
+    throw new AppError("Currency not found", 404);
   }
+
+  // Check transactions
+  const transactionExists = await Transaction.exists({
+    $or: [
+      { fromCurrencyId: currencyId },
+      { toCurrencyId: currencyId }
+    ]
+  });
+
+  if (transactionExists) {
+    throw new AppError(
+      "Cannot delete currency because it is used in transactions",
+      400
+    );
+  }
+
+  // Check exchange rates
+  const exchangeRateExists = await ExchangeRate.exists({
+    $or: [
+      { fromCurrencyId: currencyId },
+      { toCurrencyId: currencyId }
+    ]
+  });
+
+  if (exchangeRateExists) {
+    throw new AppError(
+      "Cannot delete currency because it is used in exchange rates",
+      400
+    );
+  }
+
+  await PaymentMethod.deleteMany({ currencyId });
+
+  await Currency.findByIdAndDelete(currencyId);
+
+  return true;
+}
 }
 
 export default CurrencyService;

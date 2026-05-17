@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import StatCard from "../../../components/ui/admin/StatsCard";
-import ExchangeRates from "./components/ExchangeRate";
+import StatCard from "./components/StatsCard";
+import ExchangeRates from "../ExchangeRate/components/ExchangeRate";
 import StatusBreakdown from "./components/StatusBreakdown";
 import TopPairs from "./components/TopPairs";
-import TransactionsTable, { STATUS_STYLES } from "./components/TransactionTable";
+import TransactionsTable, { STATUS_STYLES } from "../Transaction/components/TransactionTable";
 import { useDashboardStats } from "./hook/useDashboardStats";
 import { MdOutlineVisibility } from "react-icons/md";
-import Currency from "./components/Currency";
+import Currency from "../Currency/components/Currency";
 
 
 const Skeleton = ({ className = "" }: { className?: string }) => (
@@ -171,9 +171,22 @@ const Dashboard = () => {
           {/* Bottom section */}
           <div className="grid grid-cols-1 2xl:grid-cols-2 gap-6">
 
-            <TopPairs topPairs={topPairs} />
+            <TopPairs 
+              topPairs={topPairs} 
+            />
 
-            <ExchangeRates exchangeRates={exchangeRates} />
+            <ExchangeRates 
+              exchangeRates={exchangeRates.slice(0,4)} 
+              dashboardMode
+               headerAction={
+              <Link
+                to="/admin/rates"
+                className="text-xs text-[var(--tertiary)] flex items-center gap-1 hover:underline"
+              >
+                View All
+              </Link>
+            }
+            />
 
           </div>
 
@@ -186,8 +199,11 @@ const Dashboard = () => {
             statusBreakdown={statusBreakdown}
           />
 
-          <Currency
-            currency={currency.slice(0,5)}
+          <div className="pt-6">
+            <Currency
+            title="Currency"
+            dashboardMode
+            currency={currency.slice(0,4)}
             headerAction={
               <Link
                 to="/admin/currencies"
@@ -197,6 +213,7 @@ const Dashboard = () => {
               </Link>
             }
           />
+          </div>
 
 
         </div>

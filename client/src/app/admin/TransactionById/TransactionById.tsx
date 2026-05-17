@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { MdArrowBack } from "react-icons/md";
-import { STATUS_STYLES } from "../Dashboard/components/TransactionTable";
 import { useGetTransactionByIdQuery, useUpdateTransactionStatusMutation } from "../../../slices/redux-slices/transaction-api";
 import { CopyItem } from "../../../constant/ui/CopyItem";
 import { InfoItem } from "../../../constant/ui/InfoItem";
 import { toast } from "react-toastify";
+import { STATUS_STYLES } from "../Transaction/components/TransactionTable";
 
 const STATUS_OPTIONS = [
     "pending",

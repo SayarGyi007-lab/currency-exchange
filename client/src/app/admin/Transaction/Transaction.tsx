@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { MdOutlineVisibility, MdSearch } from "react-icons/md";
-import TransactionsTable, { STATUS_STYLES } from "../Dashboard/components/TransactionTable";
-import { useTransaction } from "../../../hooks/admin/useTransaction";
+import { Link, useNavigate } from "react-router-dom";
+import { MdArrowBack, MdOutlineVisibility, MdSearch } from "react-icons/md";
+import TransactionsTable, { STATUS_STYLES } from "./components/TransactionTable";
+import { useTransaction } from "./hook/useTransaction";
 import useDebounce from "../../../hooks/useDebounce";
 
 const Transaction = () => {
 
   const [page, setPage] = useState(1);
-
+  const navigate = useNavigate()
   const [search, setSearch] = useState("");
 
   const [status, setStatus] = useState("");
@@ -47,9 +47,17 @@ const Transaction = () => {
   return (
     <div className="flex flex-col gap-6 p-10">
 
+      <button
+        onClick={() => navigate('/admin/dashboard')}
+        className="flex items-center gap-2 text-sm text-[var(--text-secondary)] hover:text-[var(--primary)] transition-colors"
+      >
+        <MdArrowBack className="text-lg" />
+        Back
+      </button>
+
       <div className="glass-panel rounded-xl p-5 border border-[var(--outline-variant)]/10">
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
           {/* Search */}
           <div className="relative">
@@ -85,18 +93,6 @@ const Transaction = () => {
             <option value="completed">Completed</option>
             <option value="cancelled">Cancelled</option>
           </select>
-
-          {/* Currency */}
-          <input
-            type="text"
-            placeholder="Filter by currency..."
-            value={fromCurrency}
-            onChange={(e) => {
-              setPage(1);
-              setFromCurrency(e.target.value);
-            }}
-            className="px-4 py-3 rounded-xl bg-[var(--surface-container)] border border-[var(--outline-variant)]/10 text-[var(--text-primary)] outline-none"
-          />
 
         </div>
 
@@ -137,9 +133,8 @@ const Transaction = () => {
             header: "Status",
             render: (t) => (
               <span
-                className={`inline-block px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${
-                  STATUS_STYLES[t.status]
-                }`}
+                className={`inline-block px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider ${STATUS_STYLES[t.status]
+                  }`}
               >
                 {t.status}
               </span>

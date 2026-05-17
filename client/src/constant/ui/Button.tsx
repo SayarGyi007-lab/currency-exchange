@@ -1,5 +1,3 @@
-// #001736
-
 import type { ReactNode } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 

@@ -1,7 +1,7 @@
 import type { Pagination } from "./pagination"
 
 export interface User {
-  id: string
+  _id: string
   name: string
   email: string
   isActive: boolean;
