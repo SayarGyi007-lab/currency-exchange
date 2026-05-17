@@ -102,8 +102,8 @@ const UpdatePaymentMethod = ({ open, onClose, payment, currencyId }: Props) => {
     if (!pendingData || !payment) return;
 
     await updatePayment(payment._id, {
-      currencyId,
       ...pendingData,
+      currencyId,
     });
 
     setConfirmOpen(false);

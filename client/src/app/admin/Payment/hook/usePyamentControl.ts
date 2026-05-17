@@ -11,7 +11,7 @@ export const usePaymentControl = () => {
             await add(data).unwrap()
             toast.success("Payment create successful");
         } catch (error) {
-            toast.error(error?.data?.message ?? "Failed to create");
+            toast.error("Failed to create");
         }
     }
 
@@ -20,7 +20,7 @@ export const usePaymentControl = () => {
             await update({id, ...data}).unwrap()
             toast.success("Payment update successful");
         } catch (error) {
-            toast.error(error?.data?.message ?? "Failed to update");
+            toast.error("Failed to update");
         }
     }
 

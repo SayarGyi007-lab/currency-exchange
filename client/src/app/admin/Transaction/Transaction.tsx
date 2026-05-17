@@ -13,7 +13,7 @@ const Transaction = () => {
 
   const [status, setStatus] = useState("");
 
-  const [fromCurrency, setFromCurrency] = useState("");
+  const [fromCurrency, _setFromCurrency] = useState("");
 
   const debounce = useDebounce(search)
 

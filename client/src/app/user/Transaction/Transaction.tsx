@@ -40,7 +40,7 @@ const Transaction = () => {
     const [qrPreview, setQrPreview] = useState<string | null>(null);
     const [qrFile, setQrFile] = useState<File | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [createTransaction, { isLoading }] = useCreateTransactionMutation();
+    const [createTransaction] = useCreateTransactionMutation();
     const [upload] = useUploadMutation();
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<FormInputs>({

@@ -17,7 +17,7 @@ export const useUserControl = () => {
             await add(data).unwrap()
             toast.success("Registeration successful");
         } catch (error) {
-            toast.error(error?.data?.message ?? "Failed to register");
+            toast.error("Failed to register");
         }
     }
 
@@ -26,7 +26,7 @@ export const useUserControl = () => {
             await update({ id, ...data }).unwrap()
             toast.success("Update successful");
         } catch (error) {
-            toast.error(error?.data?.message ?? "Failed to update");
+            toast.error("Failed to update");
         }
     }
 
@@ -35,7 +35,7 @@ export const useUserControl = () => {
             await change({ id, data }).unwrap()
             toast.success("Change password successful");
         } catch (error) {
-            toast.error(error?.data?.message ?? "Failed to change password");
+            toast.error("Failed to change password");
         }
     }
 
@@ -45,9 +45,7 @@ export const useUserControl = () => {
             toast.success("User archived");
 
         } catch (error) {
-            // toast.error("Failed to archive user");
-            console.log("Archive error:", error?.data?.message ?? error);
-            toast.error(error?.data?.message ?? "Failed to archive user");
+            toast.error("Failed to archive user");
         }
     }
 
@@ -56,9 +54,7 @@ export const useUserControl = () => {
             await restore(id).unwrap()
             toast.success('User restore')
         } catch (error) {
-            // toast.error("Failed to restore user");
-            console.log("Backend message:", error?.data?.message ?? error);
-            toast.error(error?.data?.message ?? "Failed to restore user");
+            toast.error("Failed to restore user");
         }
     }
 
@@ -67,7 +63,7 @@ export const useUserControl = () => {
             await deleteUser(id).unwrap()
             toast.success("Delete user successful");
         } catch (error) {
-            toast.error(error?.data?.message ?? "Failed to delete user");
+            toast.error("Failed to delete user");
         }
     }
 

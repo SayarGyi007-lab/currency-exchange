@@ -18,8 +18,8 @@ const ReceiveMethod = ({
     qrPreview,
     setQrPreview,
     setQrFile,
-    register,
-    errors,
+    // register,
+    // errors,
 }: ReceiveMethodProps) => {
     const handleQrFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];

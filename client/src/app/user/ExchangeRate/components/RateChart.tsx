@@ -1,8 +1,8 @@
 import { useState, useMemo } from "react";
 import { XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Area, AreaChart } from "recharts";
 import { VscArrowSwap } from "react-icons/vsc";
-import { useRateChart } from "../../../../hooks/userChart";
 import { CustomTooltip } from "./CustomToolTip";
+import { useRateChart } from "../hook/userChart";
 
 interface CurrencyOption {
   code: string;

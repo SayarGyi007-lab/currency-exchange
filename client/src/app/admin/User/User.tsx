@@ -15,7 +15,7 @@ const User = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [tab, setTab] = useState<"active" | "archived">("active");
-  const [selectedUser, setSelectedUser] = useState(null)
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const { archiveUser, restoreUser, deleteUserAction, updateUser, changePasswrod } = useUserControl()
   const [passwordUser, setPasswordUser] = useState<User | null>(null)
 
@@ -24,7 +24,7 @@ const User = () => {
 
   const navigate = useNavigate();
   const userInfo = useSelector((state: RootState) => state.auth.userInfo)
-  const isSuperAdmin = userInfo.role === 'super_admin'
+  const isSuperAdmin = userInfo?.role === 'super_admin'
 
   const { users, usersPagination, isLoading } = useUser({
     page,

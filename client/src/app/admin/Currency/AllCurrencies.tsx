@@ -3,11 +3,12 @@ import { MdSearch, MdArrowBack } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Currency from "./components/Currency";
 import type { RootState } from "../../../slices/store/store";
-import { useCurrency } from "../../../hooks/useCurrency";
 import { useState } from "react";
 import useDebounce from "../../../hooks/useDebounce";
 import { useCurrencyActions } from "./hook/useCurrencyControl";
 import AddCurrency from "./components/AddCurrency";
+import { useCurrency } from "./hook/useCurrency";
+
 
 const AllCurrencies = () => {
   const navigate = useNavigate();
