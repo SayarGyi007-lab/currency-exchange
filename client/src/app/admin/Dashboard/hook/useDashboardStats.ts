@@ -66,7 +66,11 @@ export function useDashboardStats() {
       .slice(0, 5)
       .map(([pair, volume]) => ({ pair, volume: Number(volume.toFixed(2)) }));
 
-    const pendingCount = statusBreakdown.pending + statusBreakdown.received;
+    const pendingCount = statusBreakdown.pending;
+    const completeCount = statusBreakdown.completed;
+    const cancelCount = statusBreakdown.cancelled;
+    const processingCount = statusBreakdown.processing;
+    const receiveCount = statusBreakdown.received;
 
     return {
       isLoading: false,
@@ -81,6 +85,10 @@ export function useDashboardStats() {
       currency,
       pendingCount,
       error,
+      completeCount,
+      cancelCount,
+      processingCount,
+      receiveCount
     };
   }, [transaction, currency, currencyTotal, usersTotal, transactionTotal, exchangeRates, isLoading, error]);
 }

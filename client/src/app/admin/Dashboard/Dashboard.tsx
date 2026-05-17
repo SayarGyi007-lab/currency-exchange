@@ -40,12 +40,19 @@ const Dashboard = () => {
     totalCurrency,
     totalVolume,
     pendingCount = 0,
+    completeCount = 0,
+    cancelCount = 0,
+    processingCount = 0,
+    receiveCount = 0,
     statusBreakdown,
     recentTransactions,
     topPairs,
     exchangeRates,
     currency
   } = stats;
+
+  console.log(pendingCount);
+  
 
   return (
     <div className="flex flex-col gap-6 p-10">
@@ -74,9 +81,33 @@ const Dashboard = () => {
         />
 
         <StatCard
-          title="Pending approval"
+          title="Pending Transaction"
           value={pendingCount}
           highlight={pendingCount > 0}
+        />
+
+        <StatCard
+          title="Received Transaction"
+          value={receiveCount}
+          highlight={receiveCount > 0}
+        />
+
+        <StatCard
+          title="Processing Transaction"
+          value={processingCount}
+          highlight={processingCount > 0}
+        />
+
+        <StatCard
+          title="Completed approval"
+          value={completeCount}
+          highlight={completeCount > 0}
+        />
+
+        <StatCard
+          title="Cancelled approval"
+          value={cancelCount}
+          highlight={cancelCount > 0}
         />
 
       </div>
